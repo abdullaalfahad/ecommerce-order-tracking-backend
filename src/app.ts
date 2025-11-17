@@ -23,7 +23,7 @@ app.get("/health", (_req: Request, res: Response) => {
 });
 
 app.use("/api", authRoutes);
-app.use("/api", productRoutes);
+app.use("/api/products", productRoutes);
 
 app.use(errorMiddleware);
 
