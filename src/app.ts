@@ -1,11 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, { type Application, type Request, type Response } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 import errorMiddleware from './middlewares/error.middleware';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import authRoutes from "./routes/auth.routes";
 
 const app: Application = express();
 
@@ -18,6 +19,7 @@ app.get("/health", (_req: Request, res: Response) => {
   res.json({ status: "ok" });
 });
 
+app.use("/api", authRoutes);
 
 app.use(errorMiddleware);
 
