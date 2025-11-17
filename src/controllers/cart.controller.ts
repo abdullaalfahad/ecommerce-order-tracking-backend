@@ -31,3 +31,12 @@ export const addToCart = async (req: Request, res: Response) => {
   res.json(cart);
 };
 
+export const getCart = async (req: Request, res: Response) => {
+  const userId = req.user!._id;
+  let cart = await Cart.findOne({ user: userId }).populate('items.product');
+  if (!cart) {
+    cart = await Cart.create({ user: userId, items: [], total: 0 });
+  }
+  res.json(cart);
+};
+

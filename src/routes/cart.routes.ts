@@ -8,6 +8,7 @@ const router: Router = Router();
 
 router.use(requireAuth);
 
+router.get('/', ctrl.getCart);
 router.post('/add', validateBody(cartItemSchema), ctrl.addToCart);
 
 export default router;
