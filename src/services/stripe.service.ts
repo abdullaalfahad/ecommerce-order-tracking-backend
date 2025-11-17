@@ -5,11 +5,14 @@ dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
 
 export const createPaymentIntent = async (amount: number, currency = 'usd', metadata?: Record<string,string>) => {
-  const pi = await stripe.paymentIntents.create({
+  const params: Stripe.PaymentIntentCreateParams = {
     amount: Math.round(amount * 100), // in cents
     currency,
-    metadata
-  });
+  };
+  if (metadata) {
+    params.metadata = metadata;
+  }
+  const pi = await stripe.paymentIntents.create(params);
   return pi;
 };
 
