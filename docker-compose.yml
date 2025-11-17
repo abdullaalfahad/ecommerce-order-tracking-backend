@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce-backend
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+    networks:
+      - ecommerce-net
+
+  mongo:
+    image: mongo:6.0
+    container_name: ecommerce-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: ecomdb
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - ecommerce-net
+
+networks:
+  ecommerce-net:
+
+volumes:
+  mongo_data:
