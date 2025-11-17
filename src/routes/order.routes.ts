@@ -21,4 +21,7 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
   }
 });
 
+router.get('/:id', requireAuth, ctrl.getOrder);
+router.get('/', requireAuth, ctrl.listOrders);
+
 export default router;

@@ -5,7 +5,7 @@ import { createPaymentIntent } from '../services/stripe.service';
 import { io } from '../services/socket.service';
 
 export const createOrderFromCart = async (req: Request, res: Response) => {
-  const userId = req.user!._id;
+  const userId = (req.user as any)._id;
   const cart = await Cart.findOne({ user: userId }).populate('items.product');
   if (!cart || cart.items.length === 0) return res.status(400).json({ message: 'Cart is empty' });
 
@@ -63,4 +63,22 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
     const message = err instanceof Error ? err.message : String(err);
     res.status(400).send(`Webhook Error: ${message}`);
   }
+};
+
+export const getOrder = async (req: Request, res: Response) => {
+  const user = req.user as any;
+  const order = await Order.findById(req.params.id).populate('items.product');
+  if (!order) return res.status(404).json({ message: 'Not found' });
+  if (user.role !== 'admin' && order.user.toString() !== String(user._id)) return res.status(403).json({ message: 'Forbidden' });
+  res.json(order);
+};
+
+export const listOrders = async (req: Request, res: Response) => {
+  const user = req.user as any;
+  if (user.role === 'admin') {
+    const list = await Order.find().populate('items.product').sort({ createdAt: -1 });
+    return res.json(list);
+  }
+  const list = await Order.find({ user: user._id }).populate('items.product').sort({ createdAt: -1 });
+  res.json(list);
 };
