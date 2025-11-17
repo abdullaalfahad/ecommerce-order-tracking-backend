@@ -1,9 +1,6 @@
 import { Request, Response } from 'express';
 import User from '../models/user.model';
-import dotenv from 'dotenv';
 import { signToken } from '../utils/token';
-dotenv.config();
-
 
 export const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;

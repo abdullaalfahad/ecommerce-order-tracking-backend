@@ -6,7 +6,10 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 import errorMiddleware from './middlewares/error.middleware';
+import 'express-async-errors';
 import authRoutes from "./routes/auth.routes";
+import productRoutes from "./routes/product.routes";
+
 
 const app: Application = express();
 
@@ -20,6 +23,7 @@ app.get("/health", (_req: Request, res: Response) => {
 });
 
 app.use("/api", authRoutes);
+app.use("/api", productRoutes);
 
 app.use(errorMiddleware);
 
