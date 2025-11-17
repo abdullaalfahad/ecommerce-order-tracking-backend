@@ -8,5 +8,6 @@ const router: Router = Router();
 
 router.post('/', requireAuth, requireRole('admin'), validateBody(productSchema), ctrl.createProduct);
 router.put('/:id', requireAuth, requireRole('admin'), validateBody(productSchema), ctrl.updateProduct);
+router.delete('/:id', requireAuth, requireRole('admin'), ctrl.deleteProduct);
 
 export default router;

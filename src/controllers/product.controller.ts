@@ -13,3 +13,8 @@ export const updateProduct = async (req: Request, res: Response) => {
   res.json(product);
 };
 
+export const deleteProduct = async (req: Request, res: Response) => {
+  await Product.findByIdAndDelete(req.params.id);
+  res.status(204).end();
+};
+
