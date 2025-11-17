@@ -19,3 +19,8 @@ export const productSchema = Joi.object({
   images: Joi.array().items(Joi.string().uri()).optional(),
   category: Joi.string().optional()
 });
+
+export const cartItemSchema = Joi.object({
+  productId: Joi.string().required(),
+  quantity: Joi.number().integer().min(1).required()
+});

@@ -9,7 +9,7 @@ import errorMiddleware from './middlewares/error.middleware';
 import 'express-async-errors';
 import authRoutes from "./routes/auth.routes";
 import productRoutes from "./routes/product.routes";
-
+import cartRoutes from './routes/cart.routes';
 
 const app: Application = express();
 
@@ -24,6 +24,7 @@ app.get("/health", (_req: Request, res: Response) => {
 
 app.use("/api", authRoutes);
 app.use("/api/products", productRoutes);
+app.use('/cart', cartRoutes);
 
 app.use(errorMiddleware);
 
