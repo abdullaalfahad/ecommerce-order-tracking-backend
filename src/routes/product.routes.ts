@@ -6,6 +6,10 @@ import { productSchema } from '../validators/schemas';
 
 const router: Router = Router();
 
+router.get('/', ctrl.listProducts);
+router.get('/:id', ctrl.getProduct);
+
+// Protected admin routes
 router.post('/', requireAuth, requireRole('admin'), validateBody(productSchema), ctrl.createProduct);
 router.put('/:id', requireAuth, requireRole('admin'), validateBody(productSchema), ctrl.updateProduct);
 router.delete('/:id', requireAuth, requireRole('admin'), ctrl.deleteProduct);
