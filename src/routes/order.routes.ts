@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { requireAuth } from '../middlewares/auth.middleware';
+import { requireAuth, requireRole } from '../middlewares/auth.middleware';
 import * as ctrl from '../controllers/order.controller';
 import { constructEvent } from '../services/stripe.service';
 import express from 'express';
@@ -20,6 +20,8 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
     res.status(400).send(`Webhook Error: ${err.message}`);
   }
 });
+
+router.put('/:id/status', requireAuth, requireRole('admin'), ctrl.adminUpdateOrderStatus);
 
 router.get('/:id', requireAuth, ctrl.getOrder);
 router.get('/', requireAuth, ctrl.listOrders);

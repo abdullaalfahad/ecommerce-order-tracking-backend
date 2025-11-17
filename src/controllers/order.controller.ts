@@ -65,6 +65,17 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
   }
 };
 
+export const adminUpdateOrderStatus = async (req: Request, res: Response) => {
+  const orderId = req.params.id;
+  const { status } = req.body as { status: 'processing' | 'packed' | 'shipped' | 'delivered' };
+  const order = await Order.findById(orderId);
+  if (!order) return res.status(404).json({ message: 'Order not found' });
+  order.orderStatus = status;
+  await order.save();
+  io.to(`order:${order._id}`).emit('order:statusUpdated', { orderId: order._id, status: order.orderStatus });
+  res.json(order);
+};
+
 export const getOrder = async (req: Request, res: Response) => {
   const user = req.user as any;
   const order = await Order.findById(req.params.id).populate('items.product');
