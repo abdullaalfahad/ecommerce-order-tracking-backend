@@ -6,7 +6,6 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 import errorMiddleware from './middlewares/error.middleware';
-import 'express-async-errors';
 import authRoutes from "./routes/auth.routes";
 import productRoutes from "./routes/product.routes";
 import cartRoutes from './routes/cart.routes';
