@@ -60,3 +60,8 @@ export const updateCartItem = async (req: Request, res: Response) => {
   res.json(cart);
 };
 
+export const clearCart = async (req: Request, res: Response) => {
+  const userId = req.user!._id;
+  await Cart.findOneAndUpdate({ user: userId }, { items: [], total: 0 });
+  res.status(204).end();
+};

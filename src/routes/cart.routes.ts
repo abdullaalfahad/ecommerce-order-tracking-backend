@@ -11,5 +11,6 @@ router.use(requireAuth);
 router.get('/', ctrl.getCart);
 router.post('/add', validateBody(cartItemSchema), ctrl.addToCart);
 router.post('/update', validateBody(cartItemSchema), ctrl.updateCartItem);
+router.delete('/clear', ctrl.clearCart);
 
 export default router;
