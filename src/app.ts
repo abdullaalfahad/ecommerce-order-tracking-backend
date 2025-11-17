@@ -6,9 +6,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 import errorMiddleware from './middlewares/error.middleware';
-import authRoutes from "./routes/auth.routes";
-import productRoutes from "./routes/product.routes";
-import cartRoutes from './routes/cart.routes';
+import routes from './routes';
 
 const app: Application = express();
 
@@ -21,9 +19,7 @@ app.get("/health", (_req: Request, res: Response) => {
   res.json({ status: "ok" });
 });
 
-app.use("/api", authRoutes);
-app.use("/api/products", productRoutes);
-app.use('/api/cart', cartRoutes);
+app.use('/api', routes);
 
 app.use(errorMiddleware);
 
