@@ -5,8 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc --incremental",
-    "start": "pnpm run build && node dist/server.js",
+    "build": "NODE_OPTIONS='--max-old-space-size=384' tsc",
+    "build:clean": "rm -rf dist .tsbuildinfo && pnpm run build",
+    "build:minimal": "NODE_OPTIONS='--max-old-space-size=256' tsc --skipLibCheck",
+    "start": "node dist/server.js",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx}\""
