@@ -43,7 +43,7 @@ export const getCart = async (req: Request, res: Response) => {
 export const updateCartItem = async (req: Request, res: Response) => {
   const userId = req.user!._id;
   const { productId, quantity } = req.body;
-  const cart = await Cart.findOne({ user: userId });
+  let cart = await Cart.findOne({ user: userId });
   if (!cart) return res.status(404).json({ message: 'Cart not found' });
   const idx = cart.items.findIndex((i: any) => i.product.equals(productId));
   if (idx === -1) return res.status(404).json({ message: 'Item not found' });
