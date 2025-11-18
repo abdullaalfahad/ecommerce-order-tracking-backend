@@ -2,6 +2,7 @@ import http from 'http';
 import app from './app';
 import connectDB from './config/db';
 import dotenv from 'dotenv';
+import { initSocket } from './services/socket.service';
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ async function main() {
   await connectDB();
 
   const server = http.createServer(app);
+  initSocket(server);
 
   server.listen(PORT, () => {
     console.log(`Server listening on http://localhost:${PORT}`);
